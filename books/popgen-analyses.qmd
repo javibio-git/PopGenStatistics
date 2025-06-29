@@ -29,7 +29,6 @@ library(ape)
 
 # set working directory
 setwd("~/drosophila/variants/250306-jcarpinteyro-drosophila/popgenome/freebayes/vcf/filtering/")
-
 ```
 
 The following section is based on this [tutorial](https://bioinformaticsworkbook.org/dataAnalysis/VariantCalling/freebayes-dnaseq-workflow.html#gsc.tab=0).
@@ -57,7 +56,6 @@ dev.off()
 png("chr2/chr2_dotplot2.png", width = 10, height = 8, units = 'in', res = 600)
 chromoqc(chrom.chr2, xlim=c(9e+06, 11e+06))
 dev.off()
-
 ```
 
 ### Analysis for `chr3_RagTag`
@@ -440,3 +438,9 @@ colnames(finaltable_chr2)[31]<-"Fst_dbog-dmir"
 write.table(finaltable_chr2, file=name_out_chr2, sep=",",quote=FALSE)
 
 ```
+
+# `GATK` VCF analysis
+
+## VCF SNPs QC with `vcfR`
+
+### Set up environtment
