@@ -1,0 +1,442 @@
+---
+title: "Population genomics analyses of the D. pseuoobscura subgroup"
+author: "Javier Carpinteyro-Ponce"
+format: html
+editor: visual
+code-annotations: hover
+date: 06/03/2025
+editor_options: 
+  chunk_output_type: console
+toc: true
+self-contained: true
+---
+
+# `freebayes` VCF analysis
+
+## VCF SNPs QC with `vcfR`
+
+### Set up environtment
+
+```{r}
+
+#| label: vcfR-setup
+#| eval: false
+#| warning: false
+
+#install.packages('vcfR') # if not installed
+library(vcfR)
+library(ape)
+
+# set working directory
+setwd("~/drosophila/variants/250306-jcarpinteyro-drosophila/popgenome/freebayes/vcf/filtering/")
+
+```
+
+The following section is based on this [tutorial](https://bioinformaticsworkbook.org/dataAnalysis/VariantCalling/freebayes-dnaseq-workflow.html#gsc.tab=0).
+
+### Analysis for `chr2_RagTag`
+
+```{r}
+#| label: vcfR-chr2
+#| eval: false
+#| warning: false
+
+# Read vcf file
+vcf.chr2 <- read.vcfR( "chr2/chr2_RagTag_snps.vcf.recode.vcf.gz", verbose = FALSE )
+dna.chr2 <- ape::read.dna("chr2/chr2_RagTag.fasta", format = "fasta")
+gff.chr2 <- read.table("chr2/chr2_RagTag.gff", sep="\t", quote="")
+
+chrom.chr2 <- create.chromR(name='chr2', vcf=vcf.chr2, seq=dna.chr2, ann=gff.chr2)
+
+png("chr2/chr2_quality.png", width = 10, height = 8, units = 'in', res = 600)
+plot(chrom.chr2)
+dev.off()
+png("chr2/chr2_dotplots1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr2, dp.alpha=20)
+dev.off()
+png("chr2/chr2_dotplot2.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr2, xlim=c(9e+06, 11e+06))
+dev.off()
+
+```
+
+### Analysis for `chr3_RagTag`
+
+```{r}
+
+#| label: vcfR-chr3
+#| eval: false
+#| warning: false
+
+# Read vcf file
+vcf.chr3 <- read.vcfR( "chr3/chr3_RagTag_snps.vcf.recode.vcf.gz", verbose = FALSE )
+dna.chr3 <- ape::read.dna("chr3/chr3_RagTag.fasta", format = "fasta")
+gff.chr3 <- read.table("chr3/chr3_RagTag.gff", sep="\t", quote="")
+
+chrom.chr3 <- create.chromR(name='chr3', vcf=vcf.chr3, seq=dna.chr3, ann=gff.chr3)
+
+png("chr3/chr3_quality.png", width = 10, height = 8, units = 'in', res = 600)
+plot(chrom.chr3)
+dev.off()
+png("chr3/chr3_dotplots1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr3, dp.alpha=20)
+dev.off()
+png("chr3/chr3_dotplot2.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr3, xlim=c(0.7e+06, 1.5e+06))
+dev.off()
+```
+
+### Analysis for `chr4_RagTag`
+
+```{r}
+
+#| label: vcfR-chr4
+#| eval: false
+#| warning: false
+
+# Read vcf file
+vcf.chr4 <- read.vcfR( "chr4/chr4_RagTag_snps.vcf.recode.vcf.gz", verbose = FALSE )
+dna.chr4 <- ape::read.dna("chr4/chr4_RagTag.fasta", format = "fasta")
+gff.chr4 <- read.table("chr4/chr4_RagTag.gff", sep="\t", quote="")
+
+chrom.chr4 <- create.chromR(name='chr4', vcf=vcf.chr4, seq=dna.chr4, ann=gff.chr4)
+
+png("chr4/chr4_quality.png", width = 10, height = 8, units = 'in', res = 600)
+plot(chrom.chr4)
+dev.off()
+png("chr4/chr4_dotplots1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr4, dp.alpha=20)
+dev.off()
+png("chr4/chr4_dotplot2.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr4, xlim=c(1e+06, 2e+06))
+dev.off()
+```
+
+### Analysis for `chr5_RagTag`
+
+```{r}
+
+#| label: vcfR-chr5
+#| eval: false
+#| warning: false
+
+# Read vcf file
+vcf.chr5 <- read.vcfR( "chr5/chr5_RagTag_snps.vcf.recode.vcf.gz", verbose = FALSE )
+dna.chr5 <- ape::read.dna("chr5/chr5_RagTag.fasta", format = "fasta")
+gff.chr5 <- read.table("chr5/chr5_RagTag.gff", sep="\t", quote="")
+
+chrom.chr5 <- create.chromR(name='chr5', vcf=vcf.chr5, seq=dna.chr5, ann=gff.chr5)
+
+png("chr5/chr5_quality.png", width = 10, height = 8, units = 'in', res = 600)
+plot(chrom.chr5)
+dev.off()
+png("chr5/chr5_dotplots1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chr5, dp.alpha=20)
+dev.off()
+```
+
+### Analysis for `chrX_RagTag`
+
+```{r}
+
+#| label: vcfR-chrX
+#| eval: false
+#| warning: false
+
+# Read vcf file
+vcf.chrX <- read.vcfR( "chrX/chrX_RagTag_snps.vcf.recode.vcf.gz", verbose = FALSE )
+dna.chrX <- ape::read.dna("chrX/chrX_RagTag.fasta", format = "fasta")
+gff.chrX <- read.table("chrX/chrX_RagTag.gff", sep="\t", quote="")
+
+chrom.chrX <- create.chromR(name='chrX', vcf=vcf.chrX, seq=dna.chrX, ann=gff.chrX)
+
+png("chrX/chrX_quality.png", width = 10, height = 8, units = 'in', res = 600)
+plot(chrom.chrX)
+dev.off()
+png("chrX/chrX_dotplots1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chrX, dp.alpha=20)
+dev.off()
+png("chrX/chrXL_dotplot1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chrX, xlim=c(0e+06, 4e+07))
+dev.off()
+
+png("chrX/chrXR_dotplot1.png", width = 10, height = 8, units = 'in', res = 600)
+chromoqc(chrom.chrX, xlim=c(4e+07, 8e+07))
+dev.off()
+```
+
+### Filter SNPs for each chromosome with `vcftools`
+
+``` bash
+# Each vcf was filtered using the following vcftools command
+
+micromamba activate vcftools
+# Chromosome 2
+vcftools --gzvcf chr2_RagTag_snps.vcf.recode.vcf.gz \
+      --max-missing 1 \
+    --mac 3 \
+    --minQ 30 \
+    --recode \
+    --recode-INFO-all \
+    --out chr2_RagTag_snps.filtered
+
+# Chromosome 3
+vcftools --gzvcf chr3_RagTag_snps.vcf.recode.vcf.gz \
+      --max-missing 1 \
+    --mac 3 \
+    --minQ 30 \
+    --recode \
+    --recode-INFO-all \
+    --out chr3_RagTag_snps.filtered
+
+# Chromosome 4
+vcftools --gzvcf chr4_RagTag_snps.vcf.recode.vcf.gz \
+      --max-missing 1 \
+    --mac 3 \
+    --minQ 30 \
+    --recode \
+    --recode-INFO-all \
+    --out chr4_RagTag_snps.filtered
+
+# Chromosome 5
+vcftools --gzvcf chr5_RagTag_snps.vcf.recode.vcf.gz \
+      --max-missing 1 \
+    --mac 3 \
+    --minQ 30 \
+    --recode \
+    --recode-INFO-all \
+    --out chr5_RagTag_snps.filtered
+
+# Chromosome X
+vcftools --gzvcf chrX_RagTag_snps.vcf.recode.vcf.gz \
+      --max-missing 1 \
+    --mac 3 \
+    --minQ 30 \
+    --recode \
+    --recode-INFO-all \
+    --out chrX_RagTag_snps.filtered
+
+micromamba deactivate
+```
+
+Compress VCF files with `bgzip`
+
+## Population genetics stats with `PopGenome`
+
+### Install `PopGenome`
+
+The first step on the analysis is to make sure R has `PopGenome` installed.
+
+-   `PopGenome` - version 2.7.5
+
+::: callout-warning
+`PopGenome` needs to be installed from source given it is not on CRAN anymore. Version 2.7.5 can be downloaded from [here](https://cran.r-project.org/src/contrib/Archive/PopGenome/PopGenome_2.7.5.tar.gz).
+:::
+
+Install and load the `PopGenome` library:
+
+```{r}
+
+#| label: setup
+#| eval: false
+#| warning: false
+
+install.packages("ff") # needed for PopGenome
+install.packages("/home/jcarpinteyro/R/PopGenome_2.7.5.tar.gz", repos = NULL, type = "source") # if not installed
+library(PopGenome)
+```
+
+### Set up main population objects
+
+In this step, population vectors are created for each species. Also window size and steps are defined. In for this analysis, a 10 kb non-overlapping windows are defined.
+
+```{r}
+
+#| label: populations
+#| eval: false
+#| warning: false
+
+# set working directory
+setwd("~/drosophila/variants/250306-jcarpinteyro-drosophila/popgenome/freebayes/")
+
+# define populations
+
+## for d. pseudoobscura
+dpse <- c("a12","a14","a19","a24","a30","a47","a48","a49","a56","a57","a6","a60","acf12","flag14","flag14pe","flag16","flag18","m13","m14","m15","m17","m20","m27","m6","mather32","msh24","msh9","mv225","pp1134","pp1137","st","tl","vy-f16","oax1","oax4","oax5","usaw")
+
+## for d. persimilis
+dper <- c("111-35","111-50","111-51","dper1","dper10","dper2","dper3","dper4","dper5","dper6","dper7","dper8","dper9","mather40","matherg","msh1993","msh3","msh42","msh7","scif")
+
+## for d. p. bogotana
+dbog <- c("potosi2","potosi3","susa2","susa3","susa6","sutatausa3","toro1","toro7","toro4","whiteer","scinv","suta3")
+
+## for d miranda
+dmir <- c("ma28","mao101-4","mao3-3","mao3-4","mao3-5","mao3-6","ml14","ml16","ml6f","sp138","sp235")
+
+# Window and step sizes
+
+wind <- 10000 #10kb windows
+step <- 10000 # if same as wind, it means not overlapping windows
+```
+
+### Import SNPs
+
+Read VCF files and annotations for each chromosome
+
+```{r}
+#| label: importsnps
+#| eval: false
+#| warning: false
+
+# chromosome 2
+chr2 <- readData("chr2", format = "VCF", include.unknown = TRUE, gffpath="chr2_gff")
+
+# chromosome 3
+chr3 <- readData("chr3", format = "VCF", include.unknown = TRUE, gffpath="chr3_gff")
+
+# chromosome 4
+chr4 <- readData("chr4", format = "VCF", include.unknown = TRUE, gffpath="chr4_gff")
+
+# chromosome 5
+chr5 <- readData("chr5", format = "VCF", include.unknown = TRUE, gffpath="chr5_gff")
+
+# chromosome X
+chrX <- readData("chrX", format = "VCF", include.unknown = TRUE, gffpath="chrX_gff")
+
+```
+
+Set populations for each chromosome and read sequence files
+
+```{r}
+
+#| label: setpopchr
+#| eval: false
+#| warning: false
+
+# chromosome 2
+chr2 <- set.populations(chr2, list(dpse, dper, dbog, dmir), diploid = TRUE)
+chr2 <- set.synnonsyn(chr2, ref.chr="chr2_RagTag.fasta")
+
+# chromosome 3
+chr3 <- set.populations(chr3, list(dpse, dper, dbog, dmir), diploid = TRUE)
+chr3 <- set.synnonsyn(chr3, ref.chr="chr3_RagTag.fasta")
+
+# chromosome 4
+chr4 <- set.populations(chr4, list(dpse, dper, dbog, dmir), diploid = TRUE)
+chr4 <- set.synnonsyn(chr4, ref.chr="chr4_RagTag.fasta")
+
+# chromosome 5
+chr5 <- set.populations(chr5, list(dpse, dper, dbog, dmir), diploid = TRUE)
+chr5 <- set.synnonsyn(chr5, ref.chr="chr5_RagTag.fasta")
+
+# chromosome X
+chrX <- set.populations(chrX, list(dpse, dper, dbog, dmir), diploid = TRUE)
+chrX <- set.synnonsyn(chrX, ref.chr="chrX_RagTag.fasta")
+
+```
+
+### Create sliding windows
+
+This will divide each chromosome in sliding windows of 10 kb for the popgenome objects
+
+```{r}
+
+#| label: sliding
+#| eval: false
+#| warning: false
+
+# chromosome 2
+chr2.slide <- sliding.window.transform(chr2, width=as.numeric(wind),jump=as.numeric(step), type=2)
+
+# chromosome 3
+chr3.slide <- sliding.window.transform(chr3, width=as.numeric(wind),jump=as.numeric(step), type=2)
+
+# chromosome 4
+chr4.slide <- sliding.window.transform(chr4, width=as.numeric(wind),jump=as.numeric(step), type=2)
+
+# chromosome 5
+chr5.slide <- sliding.window.transform(chr5, width=as.numeric(wind),jump=as.numeric(step), type=2)
+
+# chromosome X
+chrX.slide <- sliding.window.transform(chrX, width=as.numeric(wind),jump=as.numeric(step), type=2)
+
+```
+
+### Calculate stats
+
+On this step, basic population genetics statistics are calculated for each species/population and also for each pairwise comparison where applicable
+
+```{r}
+
+#| label: stats
+#| eval: false
+#| warning: false
+
+# chromosome 2
+
+neutrality.stats(chr2.slide, detail=TRUE) -> chr2.slide
+diversity.stats(chr2.slide) -> chr2.slide
+chr2.slide<- F_ST.stats(chr2.slide)
+chr2.slide<- F_ST.stats.2(chr2.slide, Phi_ST=TRUE)
+
+load("chr2_freebayes.RData")
+
+
+name_out_chr2 <- "chr2_all_popstats.csv"
+
+# Preparation of selected statistics output  + une extra column fo chromosome number
+col_2 <- rep("chr2", length(chr2.slide@region.names))
+finaltable_chr2 <- cbind(col_2,chr2.slide@region.names, # col 1 and 2
+                      chr2.slide@n.segregating.sites[,1], # col 3
+                      chr2.slide@n.segregating.sites[,2], # col 4
+                      chr2.slide@n.segregating.sites[,3], # col 5
+                      chr2.slide@n.segregating.sites[,4], # col 6
+                      t(chr2.slide@nuc.diversity.between), # cols 7-12
+                      chr2.slide@nuc.diversity.within, # cols 13-16
+                      chr2.slide@theta_Watterson[,1], # col 17
+                      chr2.slide@theta_Watterson[,2], # col 18
+                      chr2.slide@theta_Watterson[,3], # col 19
+                      chr2.slide@theta_Watterson[,4], # col 20
+                      chr2.slide@Tajima.D[,1], # col 21
+                      chr2.slide@Tajima.D[,2], # col 22
+                      chr2.slide@Tajima.D[,3], # col 23
+                      chr2.slide@Tajima.D[,4], # col 24
+                      chr2.slide@nucleotide.F_ST, # col 25
+                      t(chr2.slide@nuc.F_ST.pairwise) # cols 26-31
+                      )
+
+nomcol<-colnames(finaltable_2)
+colnames(finaltable_chr2)[1]<-"nchr"
+colnames(finaltable_chr2)[2]<-"window"
+colnames(finaltable_chr2)[3]<-"seg_site_pse"
+colnames(finaltable_chr2)[4]<-"seg_site_per"
+colnames(finaltable_chr2)[5]<-"seg_site_bog"
+colnames(finaltable_chr2)[6]<-"seg_site_mir"
+colnames(finaltable_chr2)[7]<-"dxy_dpse-dper"
+colnames(finaltable_chr2)[8]<-"dxy_dpse-dbog"
+colnames(finaltable_chr2)[9]<-"dxy_dpse-dmir"
+colnames(finaltable_chr2)[10]<-"dxy_dper-dbog"
+colnames(finaltable_chr2)[11]<-"dxy_dper-dmir"
+colnames(finaltable_chr2)[12]<-"dxy_dbog-dmir"
+colnames(finaltable_chr2)[13]<-"pi_dpse"
+colnames(finaltable_chr2)[14]<-"pi_dper"
+colnames(finaltable_chr2)[15]<-"pi_dbog"
+colnames(finaltable_chr2)[16]<- "pi_dmir"
+colnames(finaltable_chr2)[17]<- "thetaWatterson_dpse"
+colnames(finaltable_chr2)[18]<- "thetaWatterson_dper"
+colnames(finaltable_chr2)[19]<- "thetaWatterson_dbog"
+colnames(finaltable_chr2)[20]<- "thetaWatterson_dmir"
+colnames(finaltable_chr2)[21]<-"Tajima-dpse"
+colnames(finaltable_chr2)[22]<-"Tajima-dper"
+colnames(finaltable_chr2)[23]<-"Tajima-dbog"
+colnames(finaltable_chr2)[24]<-"Tajima-dmir"
+colnames(finaltable_chr2)[25]<-"nucleotide.Fst"
+colnames(finaltable_chr2)[26]<-"Fst_dpse-dper"
+colnames(finaltable_chr2)[27]<-"Fst_dpse-dbog"
+colnames(finaltable_chr2)[28]<-"Fst_dpse-dmir"
+colnames(finaltable_chr2)[29]<-"Fst_dper-dbog"
+colnames(finaltable_chr2)[30]<-"Fst_dper-dmir"
+colnames(finaltable_chr2)[31]<-"Fst_dbog-dmir"
+write.table(finaltable_chr2, file=name_out_chr2, sep=",",quote=FALSE)
+
+```
